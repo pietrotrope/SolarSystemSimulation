@@ -12,6 +12,8 @@ global width, height
 width = 10**9.18
 height = 10**9.18
 
+cameraPosition = (0, 0)
+
 scaleFactor = 1
 
 
@@ -28,8 +30,8 @@ imagerect = background.get_rect()
 
 def rescalePosition(position):
     rescaledPosition = (
-        round(screenSize[0]/2) + round(position[0]/width),
-        round(screenSize[1]/2) + round(position[1]/height))
+        round(screenSize[0]/2) + round(position[0]/width) + cameraPosition[0],
+        round(screenSize[1]/2) + round(position[1]/height) + cameraPosition[1])
     return rescaledPosition
 
 
@@ -57,7 +59,7 @@ def renderAgents(agentToInfo=None):
                           pos[1]+round(agent.radius*scaleFactor)))
 
         pos = rescalePosition(agent.getPosition())
-        print(agent.name+": "+str(pos))
+        #print(agent.name+": "+str(pos))
 
     if (agentToInfo != None):
         textToShow = agentToInfo.name+":       "+"Mass: "+str(agentToInfo.mass)+"      Speed: x:"+str(round(
@@ -96,6 +98,9 @@ bigFont = pygame.font.SysFont('Comic Sans MS', 20)
 
 auto = True
 selectedAgent = None
+change = False
+
+oldPos = pygame.mouse.get_pos()
 
 while True:
     for event in pygame.event.get():
@@ -120,6 +125,9 @@ while True:
             if not found:
                 selectedAgent = None
 
+            if event.button == 1:
+                change = True
+
             if event.button == 4:
                 width = width - 10**7
                 height = height - 10**7
@@ -129,9 +137,23 @@ while True:
                 width = width + 10**7
                 height = height + 10**7
                 scaleFactor = scaleFactor - 0.01
+        
+        if event.type == pygame.locals.MOUSEBUTTONUP:
+            if event.button == 1:
+                change = False
+
 
     if auto:
         Agent.newPosition()
 
+    if change:
+        mousePos = pygame.mouse.get_pos()
+        x = oldPos[0] - mousePos[0]
+        y = oldPos[1] - mousePos[1]
+        if x != 0 or y != 0:
+            cameraPosition = (cameraPosition[0] - x,
+                              cameraPosition[1] - y)
+
     renderAgents(selectedAgent)
     pygame.display.update()
+    oldPos = pygame.mouse.get_pos()
