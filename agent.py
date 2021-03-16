@@ -5,7 +5,7 @@ global agentsList
 agentsList = []
 
 G = 6.67428e-11  # Gravitational costant
-tick = 20000
+tick = 25000
 
 
 class Agent:

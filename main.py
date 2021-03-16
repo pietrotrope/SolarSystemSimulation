@@ -12,8 +12,14 @@ global width, height
 width = 10**9.18
 height = 10**9.18
 
+scaleFactor = 1
+
+
 global screenSize
 screenSize = [1920, 1080]
+
+background = pygame.image.load("Images/Background.jpg")
+imagerect = background.get_rect()
 
 
 # ===============
@@ -29,22 +35,26 @@ def rescalePosition(position):
 
 def renderAgents(agentToInfo=None):
     screen.fill((0, 0, 0))
+    screen.blit(background, imagerect)
+
     for agent in agentsList:
         pos = rescalePosition(agent.getPosition())
         pygame.draw.circle(
             screen,
             agent.color,
             pos,
-            agent.radius)
+            round(agent.radius*scaleFactor))
 
         pygame.draw.circle(
             screen,
             (0, 0, 0),
             pos,
-            agent.radius, 2)
+            round(agent.radius*scaleFactor), 2)
 
         textsurface = myfont.render(agent.name, False, (255, 255, 255))
-        screen.blit(textsurface, (pos[0]-agent.radius, pos[1]+agent.radius))
+        screen.blit(
+            textsurface, (pos[0]-round(agent.radius*scaleFactor),
+                          pos[1]+round(agent.radius*scaleFactor)))
 
         pos = rescalePosition(agent.getPosition())
         print(agent.name+": "+str(pos))
@@ -84,7 +94,7 @@ myfont = pygame.font.SysFont('Comic Sans MS', 10)
 bigFont = pygame.font.SysFont('Comic Sans MS', 20)
 
 
-auto = False
+auto = True
 selectedAgent = None
 
 while True:
@@ -104,13 +114,24 @@ while True:
             found = False
             for agent in agentsList:
                 agentPos = rescalePosition(agent.getPosition())
-                if (not auto and mousePos[0] - agentPos[0])**2 + (mousePos[1] - agentPos[1])**2 < agent.radius**2:
+                if (mousePos[0] - agentPos[0])**2 + (mousePos[1] - agentPos[1])**2 < round(agent.radius*scaleFactor)**2:
                     selectedAgent = agent
                     found = True
             if not found:
                 selectedAgent = None
 
+            if event.button == 4:
+                width = width - 10**7
+                height = height - 10**7
+                scaleFactor = scaleFactor + 0.01
+
+            if event.button == 5:
+                width = width + 10**7
+                height = height + 10**7
+                scaleFactor = scaleFactor - 0.01
+
     if auto:
         Agent.newPosition()
-        renderAgents(selectedAgent)
-        pygame.display.update()
+
+    renderAgents(selectedAgent)
+    pygame.display.update()
