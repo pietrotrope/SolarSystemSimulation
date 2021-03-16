@@ -26,8 +26,7 @@ def rescalePosition(position):
     return rescaledPosition
 
 
-def drowAndUpdate():
-    Agent.newPosition()
+def renderAgents(agentToInfo=None):
     screen.fill((0, 0, 0))
     for agent in agentsList:
         pos = rescalePosition(agent.getPosition())
@@ -49,11 +48,18 @@ def drowAndUpdate():
         pos = rescalePosition(agent.getPosition())
         print(agent.name+": "+str(pos))
 
+    if (agentToInfo != None):
+        textToShow = agentToInfo.name+":       "+"Mass: "+str(agentToInfo.mass)+"      Speed: x:"+str(round(
+            agentToInfo.speed[0], 10))+" y:"+str(round(agentToInfo.speed[1], 10))+" z:"+str(round(agentToInfo.speed[2], 10))
+        textsurface = bigFont.render(
+            textToShow, False, (255, 255, 255))
+        screen.blit(textsurface, (100, 900))
+    pygame.display.update()
+
 
 # ===============================================
 # IMPORT DATA (planets, satellites, asteroids...)
 # ===============================================
-
 for name in data:
     agent = Agent(name,
                   data[name]["mass"],
@@ -78,6 +84,7 @@ bigFont = pygame.font.SysFont('Comic Sans MS', 20)
 
 
 auto = False
+selectedAgent = None
 
 while True:
     for event in pygame.event.get():
@@ -93,17 +100,16 @@ while True:
         if event.type == pygame.locals.MOUSEBUTTONDOWN:
             mousePos = pygame.mouse.get_pos()
             tmp = False
+            found = False
             for agent in agentsList:
                 agentPos = rescalePosition(agent.getPosition())
                 if (not auto and mousePos[0] - agentPos[0])**2 + (mousePos[1] - agentPos[1])**2 < agent.radius**2:
-                    drowAndUpdate()
-                    textToShow = agent.name+":       "+"Mass: "+str(agent.mass)+"      Speed: x:"+str(round(
-                        agent.speed[0], 10))+" y:"+str(round(agent.speed[1], 10))+" z:"+str(round(agent.speed[2], 10))
-                    textsurface = bigFont.render(
-                        textToShow, False, (255, 255, 255))
-                    screen.blit(textsurface, (100, 900))
-                    pygame.display.update()
+                    selectedAgent = agent
+                    found = True
+            if not found:
+                selectedAgent = None
 
     if auto:
-        drowAndUpdate()
+        Agent.newPosition()
+        renderAgents(selectedAgent)
         pygame.display.update()
