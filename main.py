@@ -59,7 +59,7 @@ def renderAgents(agentToInfo=None):
                           pos[1]+round(agent.radius*scaleFactor)))
 
         pos = rescalePosition(agent.getPosition())
-        #print(agent.name+": "+str(pos))
+        print(agent.name+": "+str(pos))
 
     if (agentToInfo != None):
         textToShow = agentToInfo.name+":       "+"Mass: "+str(agentToInfo.mass)+"      Speed: x:"+str(round(
