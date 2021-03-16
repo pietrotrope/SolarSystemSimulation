@@ -12,8 +12,8 @@ global width, height
 width = 10**9.18
 height = 10**9.18
 
-global MaxKm
-MaxKm = [10000000, 10000000]
+global screenSize
+screenSize = [1920, 1080]
 
 
 # ===============
@@ -22,7 +22,8 @@ MaxKm = [10000000, 10000000]
 
 def rescalePosition(position):
     rescaledPosition = (
-        800 + round(position[0]/width), 400 + round(position[1]/height))
+        round(screenSize[0]/2) + round(position[0]/width),
+        round(screenSize[1]/2) + round(position[1]/height))
     return rescaledPosition
 
 
@@ -75,7 +76,7 @@ for name in data:
 
 pygame.init()
 screen = pygame.display.set_mode(
-    (round(MaxKm[0]/width), round(MaxKm[1]/height)), 0, 32)
+    (screenSize[0], screenSize[1]), 0, 32)
 pygame.display.set_caption("Universe")
 pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 10)
