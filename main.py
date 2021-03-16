@@ -1,16 +1,16 @@
 
-import pygame
 import sys
+import pygame
 import numpy as np
 from pygame.locals import *
+
+from data import *
 from agent import agentsList, Agent, max_dims
 
 global screen
 global width, height
 width = 10**9.18
 height = 10**9.18
-
-AU = (149.6e6 * 1000)
 
 global MaxKm
 MaxKm = 10000000
@@ -50,45 +50,13 @@ def drowAndUpdate():
 #================#
 
 
-saturn = Agent("Saturn", np.float128(5.6834 * 10**26), 20, np.array(
-    [10.539*AU, AU, 0.1]), np.array([0.0, - 9.68 * 1000, 0.0], dtype=np.float128))
-
-
-jupiter = Agent("Jupiter", np.float128(1.8982 * 10**27), 20, np.array(
-    [6.203*AU, AU, 0.1]), np.array([0.0, - 13.07 * 1000, 0.0], dtype=np.float128))
-
-
-mars = Agent("Mars", np.float128(6.4171 * 10**23), 12, np.array(
-    [2.524*AU, AU, 0.1]), np.array([0.0, - 24.077 * 1000, 0.0], dtype=np.float128))
-
-
-earth = Agent("Earth", np.float128(5.97237 * 10**24), 14, np.array(
-    [2*AU, AU, 0.1]), np.array([0.0, - 29.783 * 1000, 0.00], dtype=np.float128))
-
-moon = Agent("Moon", np.float128(7.342 * 10**22), 5, np.array(
-    [(2 + 0.002569)*AU, AU, 0.1]), np.array([0.0, (-1.022 - 29.783)*1000, 0.00], dtype=np.float128))
-
-
-venus = Agent("Venus", np.float128(4.8685 * 10**24), 8, np.array(
-    [1.723*AU, AU, 0.1]), np.array([0.0, -35.02 * 1000, 0.0], dtype=np.float128))
-
-
-mercury = Agent("Mercury", np.float128(3.3011*10**23), 10, np.array(
-    [1.39*AU, AU, 0.1]), np.array([0.0, - 47.36 * 1000, 0.0], dtype=np.float128))
-
-
-sun = Agent("Sun", np.float128(1.9885 * 10**30), 24, np.array(
-    [AU, AU, 0.1]), np.array([0.0, 0.0, 0.0], dtype=np.float128))
-
-
-earth.color = (102, 255, 255)
-sun.color = (255, 255, 0)
-mercury.color = (160, 160, 160)
-mars.color = (255, 30, 30)
-venus.color = (255, 130, 130)
-jupiter.color = (135, 94, 19)
-saturn.color = (120, 80, 80)
-moon.color = (255, 255, 255)
+for name in data:
+    agent = Agent(name,
+                  data[name]["mass"],
+                  data[name]["radius"],
+                  np.array(data[name]["initialPosition"]),
+                  np.array(data[name]["initialVelocity"]))
+    agent.color = data[name]["color"]
 
 MaxKm = max_dims
 
@@ -123,9 +91,11 @@ while True:
                 agentPos = rescalePosition(agent.getPosition())
                 if (not auto and mousePos[0] - agentPos[0])**2 + (mousePos[1] - agentPos[1])**2 < agent.radius**2:
                     drowAndUpdate()
-                    textToShow = agent.name+":       "+"Mass: "+str(agent.weight)+"      Speed: x:"+str(round(agent.speed[0],10))+" y:"+str(round(agent.speed[1],10))+" z:"+str(round(agent.speed[2],10))
-                    textsurface = bigFont.render(textToShow, False, (255, 255, 255))
-                    screen.blit(textsurface, (100,900))
+                    textToShow = agent.name+":       "+"Mass: "+str(agent.mass)+"      Speed: x:"+str(round(
+                        agent.speed[0], 10))+" y:"+str(round(agent.speed[1], 10))+" z:"+str(round(agent.speed[2], 10))
+                    textsurface = bigFont.render(
+                        textToShow, False, (255, 255, 255))
+                    screen.blit(textsurface, (100, 900))
                     pygame.display.update()
 
     if auto:

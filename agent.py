@@ -12,16 +12,16 @@ max_dims = np.array([0.0,0.0,0.0])
 
 class Agent:
     radius = 0
-    weight = 0
+    mass = 0
     position = np.array([0.0, 0.0, 0.0])
     speed = np.array([0.0, 0.0, 0.0])
     color = (0, 0, 0)
     name = "NO_NAME_IP"
     
 
-    def __init__(self, name, weight, radius, position, speed):
+    def __init__(self, name, mass, radius, position, speed):
         self.name = name
-        self.weight = weight
+        self.mass = mass
         self.radius = radius
         self.position = position
         self.speed = speed
@@ -45,9 +45,9 @@ class Agent:
                 forceDir = np.float128(agent.position - self.position)
                 forceDir = forceDir / np.linalg.norm(forceDir)
 
-                f = G*forceDir*(self.weight*agent.weight)/(norm)
+                f = G*forceDir*(self.mass*agent.mass)/(norm)
 
-                acc = f/self.weight
+                acc = f/self.mass
 
                 if self.name == "Moon":
                     if agent.name == "Earth" or agent.name == "Sun":
