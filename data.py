@@ -1,6 +1,23 @@
 AU = (149.6e6 * 1000)
 
 data = {
+
+    "Neptune": {
+        "mass": 1.0243 * 10**26,
+        "radius": 16,
+        "initialPosition": [30*AU, 0, 0.1],
+        "initialVelocity": [0.0, - 5.43 * 1000, 0.0],
+        "color": (73, 122, 122)
+    },
+
+    "Uranus": {
+        "mass": 8.6810 * 10**25,
+        "radius": 16,
+        "initialPosition": [19*AU, 0, 0.1],
+        "initialVelocity": [0.0, - 6.80 * 1000, 0.0],
+        "color": (96, 202, 204)
+    },
+
     "Saturn": {
         "mass": 5.6834 * 10**26,
         "radius": 20,
