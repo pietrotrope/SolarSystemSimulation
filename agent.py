@@ -1,15 +1,10 @@
 import numpy as np
 import math
-from decimal import *
 
 global agentsList
 agentsList = []
 
-G = 6.67428e-11
-
-global max_dims
-max_dims = np.array([0.0,0.0,0.0])
-
+G = 6.67428e-11 #Gravitational costant
 class Agent:
     radius = 0
     mass = 0
@@ -26,8 +21,6 @@ class Agent:
         self.position = position
         self.speed = speed
         agentsList.append(self)
-        if name == "sun":
-            max_dims[0] = position*2
 
     def getPosition(self):
         return (round(self.position[0]),

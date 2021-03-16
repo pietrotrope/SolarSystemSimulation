@@ -5,7 +5,7 @@ import numpy as np
 from pygame.locals import *
 
 from data import *
-from agent import agentsList, Agent, max_dims
+from agent import agentsList, Agent
 
 global screen
 global width, height
@@ -13,8 +13,12 @@ width = 10**9.18
 height = 10**9.18
 
 global MaxKm
-MaxKm = 10000000
+MaxKm = [10000000, 10000000]
 
+
+# ===============
+# Support methods
+# ===============
 
 def rescalePosition(position):
     rescaledPosition = (
@@ -45,10 +49,10 @@ def drowAndUpdate():
         pos = rescalePosition(agent.getPosition())
         print(agent.name+": "+str(pos))
 
-# ================
-# PLANETS CREATION
-#================#
 
+# ===============================================
+# IMPORT DATA (planets, satellites, asteroids...)
+# ===============================================
 
 for name in data:
     agent = Agent(name,
@@ -58,8 +62,10 @@ for name in data:
                   np.array(data[name]["initialVelocity"]))
     agent.color = data[name]["color"]
 
-MaxKm = max_dims
 
+# ================
+# Start simulation
+# ================
 
 pygame.init()
 screen = pygame.display.set_mode(
