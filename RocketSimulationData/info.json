@@ -1,0 +1,30 @@
+{
+  "Engine" : {
+    "Specific Impulse (s)": 360,
+    "Thrust (N)": 2210000 
+  },
+  "Fuel" : {
+    "Oxidizer/Fuel Mixture Ratio" : 15,  
+    "Fuel Reserve (%)" : 5  
+  },
+  "Mass" : {
+    "Dry Mass (kg)": 24000  
+  },
+  "Aerodynamics" : {
+    "Drag Coefficient" : 0.0556,  
+    "Cross-section (m2)" : 0.0255364  
+  },
+  "Environment" : {
+    "Elevation (m)" : 113,
+    "Simulation step (s)" : 1,
+    "Standard gravity (m/s2)" : 9.80665,
+    "Air molar mass (kg/mol)" : 0.02896968,
+    "Gas constant (J/(K.mol))" : 8.314462618,
+    "Air heat capacity ratio" : 1.4,
+    "Standard Atmospheric pressure @SL (Pa)" : 101325
+  },
+  "Output" : {
+    "Log File Path" : "RocketSimulationData/Flight.log",  
+    "CSV File Path" : "RocketSimulationData/Flight.csv"  
+  }
+}

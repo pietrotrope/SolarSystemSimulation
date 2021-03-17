@@ -6,6 +6,7 @@ from pygame.locals import *
 
 from data import *
 from agent import agentsList, Agent
+from RocketSimulation import simulateRocket
 
 global screen
 global width, height
@@ -16,12 +17,10 @@ cameraPosition = (0, 0)
 
 scaleFactor = 1
 
+testRocket = True
 
 global screenSize
 screenSize = [1920, 1080]
-
-background = pygame.image.load("Images/Background.jpg")
-imagerect = background.get_rect()
 
 
 # ===============
@@ -67,24 +66,7 @@ def renderAgents(agentToInfo=None):
         textsurface = bigFont.render(
             textToShow, False, (255, 255, 255))
         screen.blit(textsurface, (100, 900))
-    pygame.display.update()
 
-
-# ===============================================
-# IMPORT DATA (planets, satellites, asteroids...)
-# ===============================================
-for name in data:
-    agent = Agent(name,
-                  data[name]["mass"],
-                  data[name]["radius"],
-                  np.array(data[name]["initialPosition"]),
-                  np.array(data[name]["initialVelocity"]))
-    agent.color = data[name]["color"]
-
-
-# ================
-# Start simulation
-# ================
 
 pygame.init()
 screen = pygame.display.set_mode(
@@ -95,6 +77,41 @@ myfont = pygame.font.SysFont('Comic Sans MS', 10)
 
 bigFont = pygame.font.SysFont('Comic Sans MS', 20)
 
+
+# ===============================================
+# IMPORT DATA (planets, satellites, asteroids...)
+# ===============================================
+earth = None
+for name in data:
+    agent = Agent(name,
+                  data[name]["mass"],
+                  data[name]["radius"],
+                  np.array(data[name]["initialPosition"]),
+                  np.array(data[name]["initialVelocity"]))
+    agent.color = data[name]["color"]
+    if agent.name == "Earth":
+        earth = agent
+
+if testRocket:
+    rocket = simulateRocket(screen)
+    agent = Agent("Rocket",
+                  rocket["m"],
+                  3,
+                  np.array([earth.position[0] + rocket["altitude"]*1000,
+                            earth.position[1],
+                            earth.position[2]]),
+                  np.array([earth.speed[0] + rocket["v"],
+                            earth.speed[1],
+                            earth.speed[2]]))
+    agent.color = (255, 0, 255)
+
+# ================
+# Start simulation
+# ================
+
+
+background = pygame.image.load("Images/Background.jpg")
+imagerect = background.get_rect()
 
 auto = True
 selectedAgent = None
@@ -137,11 +154,10 @@ while True:
                 width = width + 10**7
                 height = height + 10**7
                 scaleFactor = scaleFactor - 0.01
-        
+
         if event.type == pygame.locals.MOUSEBUTTONUP:
             if event.button == 1:
                 change = False
-
 
     if auto:
         Agent.newPosition()
