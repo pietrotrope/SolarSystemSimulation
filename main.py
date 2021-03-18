@@ -61,8 +61,8 @@ def renderAgents(agentToInfo=None):
         print(agent.name+": "+str(pos))
 
     if (agentToInfo != None):
-        textToShow = agentToInfo.name+":       "+"Mass: "+str(agentToInfo.mass)+"      Speed: x:"+str(round(
-            agentToInfo.speed[0], 10))+" y:"+str(round(agentToInfo.speed[1], 10))+" z:"+str(round(agentToInfo.speed[2], 10))
+        textToShow = agentToInfo.name+":       "+"Mass: "+str(agentToInfo.mass)+"      Velocity: x:"+str(round(
+            agentToInfo.velocity[0], 10))+" y:"+str(round(agentToInfo.velocity[1], 10))+" z:"+str(round(agentToInfo.velocity[2], 10))
         textsurface = bigFont.render(
             textToShow, False, (255, 255, 255))
         screen.blit(textsurface, (100, 900))

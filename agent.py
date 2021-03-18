@@ -48,7 +48,7 @@ class Agent:
         return finalAcc
 
     def updateVelocity(self):
-        self.velocity = self.velocity + tick*self._computeTotalAcc()
+        self.velocity += tick*self._computeTotalAcc()
 
     @staticmethod
     def newPosition():
@@ -60,7 +60,7 @@ class Agent:
         for agent in agentsList:
             agent.updateVelocity()
         for agent in agentsList:
-            agent.position = agent.position + tick*agent.velocity
+            agent.position += tick*agent.velocity
 
 
 def _computeAcc(agent1, agent2):
