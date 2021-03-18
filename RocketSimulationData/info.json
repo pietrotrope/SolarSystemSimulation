@@ -1,5 +1,6 @@
 {
   "Engine" : {
+    "Type" : "Liquid",
     "Specific Impulse (s)": 360,
     "Thrust (N)": 2210000 
   },
@@ -24,7 +25,6 @@
     "Standard Atmospheric pressure @SL (Pa)" : 101325
   },
   "Output" : {
-    "Log File Path" : "RocketSimulationData/Flight.log",  
     "CSV File Path" : "RocketSimulationData/Flight.csv"  
   }
 }
