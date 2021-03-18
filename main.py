@@ -100,9 +100,9 @@ if testRocket:
                   np.array([earth.position[0] + rocket["altitude"]*1000,
                             earth.position[1],
                             earth.position[2]]),
-                  np.array([earth.speed[0] + rocket["v"],
-                            earth.speed[1],
-                            earth.speed[2]]))
+                  np.array([earth.velocity[0] + rocket["v"],
+                            earth.velocity[1],
+                            earth.velocity[2]]))
     agent.color = (255, 0, 255)
 
 # ================
