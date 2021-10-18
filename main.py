@@ -17,7 +17,7 @@ cameraPosition = (0, 0)
 
 scaleFactor = 1
 
-testRocket = True
+testRocket = False
 
 global screenSize
 screenSize = [1920, 1080]
